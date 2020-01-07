@@ -195,4 +195,54 @@ router.put('/like/:id', auth, async (req, res) => {
     });
   }
 });
+/**
+ * @description         Remove like from posts
+ * @route               Put api/v1/posts/unlike/:id
+ * @access              Private
+ */
+router.put('/unlike/:id', auth, async (req, res) => {
+  try {
+    const post = await Posts.findById(req.params.id);
+    // check if post exists
+    if (!post) {
+      return res.status(404).json({
+        status: false,
+        message: `Post with id ${req.params.id} was not found!`
+      });
+    }
+    // check like
+    if (
+      post.likes.filter(like => like.user.toString() === req.user.id).length ===
+      0
+    ) {
+      return res.status(400).json({
+        status: false,
+        message: `Post has't been liked by user ${req.params.id}`
+      });
+    }
+    // get the index and remove
+    const removeIndex = post.likes
+      .map(like => like.user.toString())
+      .indexOf(req.user.id);
+
+    post.likes.splice(removeIndex, 1);
+    await post.save();
+    return res.status(200).json({
+      status: true,
+      data: 'Like removed from post'
+    });
+  } catch (error) {
+    console.error(error);
+    if (error.kind === 'ObjectId') {
+      return res.status(404).json({
+        status: false,
+        message: `Post with id ${req.params.id} was not found!`
+      });
+    }
+    return res.status(500).json({
+      status: false,
+      message: error
+    });
+  }
+});
 module.exports = router;

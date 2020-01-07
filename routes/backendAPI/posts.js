@@ -6,9 +6,9 @@ const Posts = require('../../models/Posts');
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 /**
- * @description         Get post
+ * @description         Add a new post
  * @route               POST api/v1/posts
- * @access              Public
+ * @access              Private
  */
 router.post(
   '/',
@@ -245,4 +245,56 @@ router.put('/unlike/:id', auth, async (req, res) => {
     });
   }
 });
+/**
+ * @description         Add a commnet to post
+ * @route               POST api/v1/posts/comment
+ * @access              Private
+ */
+router.post(
+  '/comment/:id',
+  [
+    auth,
+    [
+      check('text', 'Write something')
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        status: false,
+        errors: errors.array()
+      });
+    }
+
+    try {
+      const user = await User.findById(req.user.id).select('-password');
+      const post = await Posts.findById(req.params.id);
+
+      const newComment = {
+        user: req.user.id,
+        text: req.body.text,
+        name: user.name,
+        profilePic: user.profilePic
+      };
+      post.comments.unshift(newComment);
+      await post.save();
+
+      return res.status(200).json({
+        status: true,
+        data: post
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        status: false,
+        message: error
+      });
+    }
+  }
+);
+
 module.exports = router;

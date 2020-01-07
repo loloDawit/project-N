@@ -24,10 +24,10 @@ const UserProfileSchema = mongoose.Schema({
     type: String
   },
   bio: {
-    type: Date
+    type: String
   },
   githubusername: {
-    type: Date
+    type: String
   },
   nocstatus: {
     type: String,

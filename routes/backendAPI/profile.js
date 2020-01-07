@@ -34,6 +34,72 @@ router.get('/self', auth, async (req, res) => {
   }
 });
 /**
+ * @description         Get profile
+ * @route               GET api/v1/profile
+ * @access              Private
+ */
+router.get('/', async (req, res) => {
+  try {
+    const profiles = await Profile.find().populate('user', [
+      'name',
+      'profilePic'
+    ]);
+    if (!profiles) {
+      res.status(400).json({
+        status: false,
+        message: 'No profile found!'
+      });
+    }
+    res.status(200).json({
+      status: true,
+      message: 'Profile found',
+      data: profiles
+    });
+    // user found, return profile
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: false,
+      message: 'Server Error!'
+    });
+  }
+});
+/**
+ * @description         Get profile by a user id
+ * @route               GET api/v1/profile/user/:id
+ * @access              Private
+ */
+router.get('/user/:id', async (req, res) => {
+  try {
+    const profile = await Profile.findOne({
+      user: req.params.id
+    }).populate('user', ['name', 'profilePic']);
+    if (!profile) {
+      res.status(400).json({
+        status: false,
+        message: 'No profile found!'
+      });
+    }
+    res.status(200).json({
+      status: true,
+      message: 'Profile found',
+      data: profile
+    });
+    // user found, return profile
+  } catch (error) {
+    if (error.kind === 'ObjectId') {
+      return res.status(400).json({
+        status: false,
+        message: 'No profile found!!'
+      });
+    }
+    res.status(500).json({
+      status: false,
+      message: 'Server Error!'
+    });
+  }
+});
+/**
  * @description         Create a user profile
  * @route               POST api/v1/profile
  * @access              Private
@@ -84,10 +150,10 @@ router.post(
         .split(',')
         .map(skill => skill.trim());
     }
-    userProfileFieldsObj.social = {};
-    if (twitter) userProfileFieldsObj.social.twitter = twitter;
-    if (github) userProfileFieldsObj.social.github = github;
-    if (linkedin) userProfileFieldsObj.social.linkedin = linkedin;
+    userProfileFieldsObj.sociallinks = {};
+    if (twitter) userProfileFieldsObj.sociallinks.twitter = twitter;
+    if (github) userProfileFieldsObj.sociallinks.github = github;
+    if (linkedin) userProfileFieldsObj.sociallinks.linkedin = linkedin;
 
     try {
       let userProfile = await Profile.findOne({
@@ -125,4 +191,28 @@ router.post(
     }
   }
 );
+/**
+ * @description         Delete profile by a user id and their post
+ * @route               DELETE api/v1/profile
+ * @access              Private
+ */
+router.delete('/', auth, async (req, res) => {  
+  try {
+    await Profile.findOneAndRemove({
+      user: req.user.id
+    });
+    await User.findOneAndRemove({
+      _id: req.user.id
+    });
+    res.status(200).json({
+      status: true,
+      message: 'Profile Deleted!',
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: false,
+      message: 'Server Error!'
+    });
+  }
+});
 module.exports = router;

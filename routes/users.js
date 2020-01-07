@@ -1,63 +1,61 @@
 const express = require('express');
-const JSONWebToken = require('jsonwebtoken');
+const User = require('../models/User');
+const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
+const JSONWebToken = require('jsonwebtoken');
 const config = require('config');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
-const auth = require('../../middleware/auth');
-const User = require('../../models/User');
-
 /**
- * @description         Get auth
- * @route               GET api/v1/auth
+ * @description         Get users
+ * @route               GET api/v1/users
  * @access              Public
  */
-router.get('/', auth, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select('-password');
-    res.status(200).json({
-      success: true,
-      data: user
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: false,
-      message: 'Server Error'
-    });
-  }
-});
+router.get('/', (req, res) => res.json('User route'));
 /**
- * @description         Authenticate user and get token
- * @route               POST api/v1/auth
+ * @description         Create a user
+ * @route               POST api/v1/users
  * @access              Public
  */
 router.post(
   '/',
   [
+    check('name', 'Name is required')
+      .not()
+      .isEmpty(),
     check('email', 'Please use a valid email').isEmail(),
-    check('password', 'Please enter a valid password').exists()
+    check('password', 'Please enter a valid password').isLength({ min: 8 })
   ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    // get user
-    const { email, password } = req.body;
+    // register user
+    const { name, email, password } = req.body;
     try {
       let user = await User.findOne({ email: email });
-      if (!user) {
+      if (user) {
         return res.status(400).json({
-          errors: [{ message: 'Invalid Email/Password!' }]
+          errors: [{ message: 'User Already Exists' }]
         });
       }
-      // math user email and password
-      const checkMatch = await bcrypt.compare(password, user.password);
-      if (!checkMatch) {
-        res.status(400).json({
-          errors: [{ message: 'Invalid Email/Password!' }]
-        });
-      }
+      // get the profile pic
+      const profilePic = gravatar.url(email, {
+        s: '200',
+        r: 'pg',
+        d: 'mm'
+      });
+      user = new User({
+        name,
+        email,
+        profilePic,
+        password
+      });
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+
+      await user.save();
       const payload = {
         user: {
           id: user.id
@@ -67,13 +65,13 @@ router.post(
         payload,
         config.get('JWT_SECRET'),
         {
-          expiresIn: 36000
+          expiresIn: 360000
         },
         (err, token) => {
           if (err) throw err;
           res.status(201).json({
             success: true,
-            data: 'User verified',
+            data: 'User created',
             token
           });
         }

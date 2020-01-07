@@ -1,7 +1,6 @@
 const express = require('express');
 const connectDataBase = require('./config/database');
 const colors = require('colors');
-const users = require('./routes/backendAPI/users');
 const app = express();
 connectDataBase();
 
@@ -15,10 +14,10 @@ app.get('/', (req, res) =>
 );
 
 // Define Routes
-app.use('/api/v1/users', require('./routes/backendAPI/users'));
-app.use('/api/v1/posts', require('./routes/backendAPI/posts'));
-app.use('/api/v1/profile', require('./routes/backendAPI/profile'));
-app.use('/api/v1/auth', require('./routes/backendAPI/auth'));
+app.use('/api/v1/users', require('./routes/users'));
+app.use('/api/v1/posts', require('./routes/posts'));
+app.use('/api/v1/profile', require('./routes/profile'));
+app.use('/api/v1/auth', require('./routes/auth'));
 const PORT = process.env.PORT || 5010;
 
 app.listen(PORT, () =>

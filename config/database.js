@@ -10,7 +10,7 @@ const connectDataBase = async () => {
       useFindAndModify: false,
       useUnifiedTopology: true
     });
-    console.log(`MongoDB Successfully Connected.....${connection.connection.host}`.blue.bold);
+    console.log(`MongoDB Successfully Connected to.....${connection.connection.host}`.blue.bold);
   } catch (error) {
     console.error();
     process.exit(1);

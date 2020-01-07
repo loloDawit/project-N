@@ -1,5 +1,5 @@
 /**
- **  User Proiel Schema
+ **  User Profile Schema
  *
  */
 const mongoose = require('mongoose');

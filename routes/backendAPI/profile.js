@@ -4,6 +4,8 @@ const auth = require('../../middleware/auth');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 const { check, validationResult } = require('express-validator');
+const request = require('request');
+const config = require('config');
 /**
  * @description         Get profile
  * @route               GET api/v1/profile/self
@@ -410,6 +412,49 @@ router.delete('/education/:educationId', auth, async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
+      status: false,
+      message: 'Server Error!'
+    });
+  }
+});
+/**                   GitHub                         */
+/**
+ * @description         Get github profile
+ * @route               GET api/v1/profile/github/:username
+ * @access              Public
+ */
+router.get('/github/:username', async (req, res) => {
+  try {
+    const reqOptions = {
+      uri: encodeURI(
+        `https://api.github.com/users/${
+          req.params.username
+        }/repos?per_page=5&sort=created:asc&client_id=${config.get(
+          'GitHub_Client_ID'
+        )}&client_secret=${config.get('GitHub_Client_Secret')}`
+      ),
+      method: 'GET',
+      headers: { 'user-agent': 'node.js' }
+    };
+    request(reqOptions, (error, response, body) => {
+      if (error) {
+        console.log(error);
+      }
+      if (response.statusCode !== 200) {
+        return res.status(404).json({
+          status: false,
+          message: 'Username not found!'
+        });
+      }
+      return res.status(200).json({
+        status: true,
+        message: 'Profile found',
+        data: JSON.parse(body)
+      });
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
       status: false,
       message: 'Server Error!'
     });

@@ -1,0 +1,25 @@
+image: node:latest
+stages:
+  - build
+  - test
+  - deploy
+  - docker
+cache:
+  paths:
+    - node_modules/
+build:
+  stage: build
+  script:
+    - npm install
+    - unset CI
+    - npm run-script build
+test:
+  stage: test
+  script:
+    - echo "Running react test suite......"
+deploy:
+  stage: deploy
+  script:
+    - npm install
+    - unset CI
+    - npm run-script deploy

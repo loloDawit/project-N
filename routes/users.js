@@ -37,7 +37,7 @@ router.post(
       let user = await User.findOne({ email: email });
       if (user) {
         return res.status(400).json({
-          errors: [{ message: 'User Already Exists' }]
+          errors: [{ msg: 'User Already Exists' }]
         });
       }
       // get the profile pic
@@ -69,9 +69,8 @@ router.post(
         },
         (err, token) => {
           if (err) throw err;
-          res.status(201).json({
+          res.json({
             success: true,
-            data: 'User created',
             token
           });
         }

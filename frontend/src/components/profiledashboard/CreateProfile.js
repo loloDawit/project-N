@@ -174,6 +174,7 @@ const CreateProfile = ({ createUserProfile, history }) => {
                 placeholder="Twitter URL"
                 name="twitter"
                 value={twitter}
+                onChange={e => onChange(e)}
               />
             </div>
             <div className="form-group social-input">
@@ -181,8 +182,9 @@ const CreateProfile = ({ createUserProfile, history }) => {
               <input
                 type="text"
                 placeholder="GitHub URL"
-                name="GitHub"
-                value={twitter}
+                name="github"
+                value={github}
+                onChange={e => onChange(e)}
               />
             </div>
             <div className="form-group social-input">
@@ -199,9 +201,9 @@ const CreateProfile = ({ createUserProfile, history }) => {
         )}
 
         <input type="submit" className="btn btn-primary my-1" />
-        <a className="btn btn-light my-1" href="dashboard.html">
+        <Link className="btn btn-light my-1" to="/dashboard">
           Go Back
-        </a>
+        </Link>
       </form>
     </Fragment>
   );

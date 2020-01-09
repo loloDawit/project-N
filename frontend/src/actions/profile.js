@@ -30,9 +30,9 @@ export const getUserProfile = () => async dispatch => {
  *
  */
 export const getAllUserProfile = () => async dispatch => {
-  // dispatch({
-  //   type: REMOVE_PROFILE
-  // });
+  dispatch({
+    type: REMOVE_PROFILE
+  });
   try {
     const res = await axios.get('/api/v1/profile');
     dispatch({
@@ -53,7 +53,7 @@ export const getUserProfileById = user_id => async dispatch => {
   try {
     const res = await axios.get(`/api/v1/profile/user/${user_id}`);
     dispatch({
-      type: USER_PROFILES,
+      type: USER_PROFILE,
       payload: res.data
     });
   } catch (err) {

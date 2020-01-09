@@ -113,9 +113,9 @@ const EditProfile = ({
             <option value="Junior Developer">Junior Developer</option>
             <option value="Senior Developer">Senior Developer</option>
             <option value="Manager">Manager</option>
-            <option value="Student or Learning">DevOps</option>
-            <option value="Instructor">Network Engineer</option>
-            <option value="Intern">Sinor Manager</option>
+            <option value="DevOps">DevOps</option>
+            <option value="Network Engineer">Network Engineer</option>
+            <option value="Sinor Manager">Sinor Manager</option>
             <option value="Other">Other</option>
           </select>
           <small className="form-text">

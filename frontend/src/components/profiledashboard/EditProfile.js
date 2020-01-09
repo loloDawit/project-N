@@ -74,19 +74,7 @@ const EditProfile = ({
           ? ''
           : profile.profile.data.sociallinks.linkedin
     });
-  }, [
-    profile.loading,
-    profile.profile.data.bio,
-    profile.profile.data.company,
-    profile.profile.data.githubusername,
-    profile.profile.data.location,
-    profile.profile.data.nocstatus,
-    profile.profile.data.skills,
-    profile.profile.data.sociallinks,
-    profile.profile.data.status,
-    profile.profile.data.website,
-    getUserProfile
-  ]);
+  }, [profile.loading]);
   const {
     nocstatus,
     status,

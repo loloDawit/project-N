@@ -24,8 +24,34 @@ export const createUserProfile = (
   isEdited = false
 ) => async dispatch => {
   try {
-    
-  } catch (error) {
-    
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    const res = await axios.post('/api/v1/profile', formData, config);
+    dispatch({
+      type: USER_PROFILE,
+      payload: res.data
+    });
+    dispatch(
+      setAlert(
+        isEdited
+          ? 'Your Profile has been updated'
+          : 'Your profile has been created'
+      )
+    );
+    if (!isEdited) {
+      history.push('/dashboard');
+    }
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+    dispatch({
+      type: PROFILE_FAILER,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
   }
 };

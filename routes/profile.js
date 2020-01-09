@@ -17,22 +17,22 @@ router.get('/self', auth, async (req, res) => {
       user: req.user.id
     }).populate('user', ['name', 'profilePic']);
     if (!profile) {
-      res.status(400).json({
+      return res.status(400).json({
         status: false,
-        message: 'No profile found for this user'
+        msg: 'No profile found for this user'
       });
     }
-    res.status(200).json({
+    return res.status(200).json({
       status: true,
-      message: 'Profile found',
+      msg: 'Profile found',
       data: profile
     });
     // user found, return profile
   } catch (error) {
     console.log(error);
-    res.status(500).json({
+    return res.status(500).json({
       status: false,
-      message: 'Server Error!'
+      msg: 'Server Error!'
     });
   }
 });
@@ -48,12 +48,12 @@ router.get('/', async (req, res) => {
       'profilePic'
     ]);
     if (!profiles) {
-      res.status(400).json({
+      return res.status(400).json({
         status: false,
         message: 'No profile found!'
       });
     }
-    res.status(200).json({
+    return res.status(200).json({
       status: true,
       message: 'Profile found',
       data: profiles
@@ -61,7 +61,7 @@ router.get('/', async (req, res) => {
     // user found, return profile
   } catch (error) {
     console.log(error);
-    res.status(500).json({
+    return res.status(500).json({
       status: false,
       message: 'Server Error!'
     });
@@ -78,12 +78,12 @@ router.get('/user/:id', async (req, res) => {
       user: req.params.id
     }).populate('user', ['name', 'profilePic']);
     if (!profile) {
-      res.status(400).json({
+      return res.status(400).json({
         status: false,
         message: 'No profile found!'
       });
     }
-    res.status(200).json({
+    return res.status(200).json({
       status: true,
       message: 'Profile found',
       data: profile
@@ -96,7 +96,7 @@ router.get('/user/:id', async (req, res) => {
         message: 'No profile found!!'
       });
     }
-    res.status(500).json({
+    return res.status(500).json({
       status: false,
       message: 'Server Error!'
     });
@@ -146,7 +146,7 @@ router.post(
     if (website) userProfileFieldsObj.website = website;
     if (location) userProfileFieldsObj.location = location;
     if (status) userProfileFieldsObj.status = status;
-    if (bio) userProfileFieldsObj.status = bio;
+    if (bio) userProfileFieldsObj.bio = bio;
     if (githubusername) userProfileFieldsObj.githubusername = githubusername;
     if (skills) {
       userProfileFieldsObj.skills = skills

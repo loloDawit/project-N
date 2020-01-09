@@ -13,7 +13,7 @@ const Navbar = ({ logout, auth: { isAuthenticated, loading } }) => {
         </Link>
       </li>
       <li>
-        <a onClick={logout} href="/">
+        <a onClick={logout} href='#!'>
           <i className="fas fa-sign-out-alt" />{' '}
           <span className="hide-sm"> Logout </span>
         </a>
@@ -46,7 +46,7 @@ const Navbar = ({ logout, auth: { isAuthenticated, loading } }) => {
     </nav>
   );
 };
-Navbar.prototype = {
+Navbar.protoTypes= {
   logout: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };

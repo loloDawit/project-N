@@ -12,5 +12,6 @@ export const LOGIN_FAILER = 'LOGIN_FAILER';
 
 export const USER_PROFILE = 'USER_PROFILE';
 export const PROFILE_FAILER = 'PROFILE_FAILER';
+export const REMOVE_PROFILE = 'REMOVE_PROFILE';
 
 export const LOGOUT = 'LOGOUT';

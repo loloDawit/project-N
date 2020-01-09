@@ -1,6 +1,12 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { USER_PROFILE, PROFILE_FAILER, UPDATE_PROFILE } from './constant';
+import {
+  USER_PROFILE,
+  PROFILE_FAILER,
+  UPDATE_PROFILE,
+  DELETE_ACCOUNT,
+  REMOVE_PROFILE
+} from './constant';
 /**
  *
  */
@@ -19,10 +25,10 @@ export const getUserProfile = () => async dispatch => {
   }
 };
 /**
- * 
- * @param {*} formData 
- * @param {*} history 
- * @param {*} isEdited 
+ *
+ * @param {*} formData
+ * @param {*} history
+ * @param {*} isEdited
  */
 export const createUserProfile = (
   formData,
@@ -63,9 +69,9 @@ export const createUserProfile = (
   }
 };
 /**
- * 
- * @param {*} formData 
- * @param {*} history 
+ *
+ * @param {*} formData
+ * @param {*} history
  */
 export const addUserExperience = (formData, history) => async dispatch => {
   try {
@@ -94,9 +100,9 @@ export const addUserExperience = (formData, history) => async dispatch => {
   }
 };
 /**
- * 
- * @param {*} formData 
- * @param {*} history 
+ *
+ * @param {*} formData
+ * @param {*} history
  */
 export const addUserEducation = (formData, history) => async dispatch => {
   try {
@@ -122,5 +128,75 @@ export const addUserEducation = (formData, history) => async dispatch => {
       type: PROFILE_FAILER,
       payload: { msg: err.response.statusText, status: err.response.status }
     });
+  }
+};
+/**
+ *
+ * @param {*} exp_id
+ */
+export const deleteUserExperience = exp_id => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/v1/profile/experience/${exp_id}`);
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data
+    });
+    dispatch(
+      setAlert('Experience has been removed from your profile.', 'success')
+    );
+  } catch (err) {
+    dispatch({
+      type: PROFILE_FAILER,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+/**
+ *
+ * @param {*} exp_id
+ */
+export const deleteUserEducation = edu_id => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/v1/profile/education/${edu_id}`);
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data
+    });
+    dispatch(
+      setAlert('Education has been removed from your profile.', 'success')
+    );
+  } catch (err) {
+    dispatch({
+      type: PROFILE_FAILER,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+/**
+ *
+ * @param {*} exp_id
+ */
+export const deleteUserAccount = () => async dispatch => {
+  if (
+    window.confirm(
+      'Hey, Are you sure you want to DELETE your account? This can not be UNDONE!!'
+    )
+  ) {
+    try {
+      const res = await axios.delete('/api/v1/profile');
+      dispatch({
+        type: REMOVE_PROFILE
+      });
+      dispatch({
+        type: DELETE_ACCOUNT
+      });
+      dispatch(setAlert('Your has been deleted.'));
+    } catch (err) {
+      dispatch({
+        type: PROFILE_FAILER,
+        payload: { msg: err.response.statusText, status: err.response.status }
+      });
+    }
   }
 };

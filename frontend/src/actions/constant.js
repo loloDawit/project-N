@@ -15,4 +15,6 @@ export const PROFILE_FAILER = 'PROFILE_FAILER';
 export const REMOVE_PROFILE = 'REMOVE_PROFILE';
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 
+export const DELETE_ACCOUNT = 'DELETE_ACCOUNT';
+
 export const LOGOUT = 'LOGOUT';

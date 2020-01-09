@@ -20,6 +20,9 @@ const UserProfileSchema = mongoose.Schema({
     type: String,
     required: [true, 'Please add a status']
   },
+  location: {
+    type: String
+  },
   company: {
     type: String
   },

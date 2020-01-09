@@ -2,10 +2,15 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { logout, loadUser } from '../../actions/auth';
+import { logout } from '../../actions/auth';
 const Navbar = ({ logout, auth: { isAuthenticated, loading } }) => {
   const authrizedLinks = (
     <ul>
+      <li>
+        <Link to="/profiles">
+          <span className="hide-sm">Teams</span>
+        </Link>
+      </li>
       <li>
         <Link to="/dashboard">
           <i className="fas fa-user" />{' '}
@@ -13,7 +18,7 @@ const Navbar = ({ logout, auth: { isAuthenticated, loading } }) => {
         </Link>
       </li>
       <li>
-        <a onClick={logout} href='#!'>
+        <a onClick={logout} href="#!">
           <i className="fas fa-sign-out-alt" />{' '}
           <span className="hide-sm"> Logout </span>
         </a>
@@ -23,7 +28,9 @@ const Navbar = ({ logout, auth: { isAuthenticated, loading } }) => {
   const guestLinks = (
     <ul>
       <li>
-        <Link to="#!">Teams</Link>
+        <Link to="/profiles">
+          <span className="hide-sm">Teams</span>
+        </Link>
       </li>
       <li>
         <Link to="/register">Register</Link>
@@ -46,7 +53,7 @@ const Navbar = ({ logout, auth: { isAuthenticated, loading } }) => {
     </nav>
   );
 };
-Navbar.protoTypes= {
+Navbar.protoTypes = {
   logout: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };

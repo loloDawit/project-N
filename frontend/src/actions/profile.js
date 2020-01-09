@@ -30,9 +30,9 @@ export const getUserProfile = () => async dispatch => {
  *
  */
 export const getAllUserProfile = () => async dispatch => {
-  dispatch({
-    type: REMOVE_PROFILE
-  });
+  // dispatch({
+  //   type: REMOVE_PROFILE
+  // });
   try {
     const res = await axios.get('/api/v1/profile');
     dispatch({
@@ -240,7 +240,7 @@ export const deleteUserAccount = () => async dispatch => {
     )
   ) {
     try {
-      const res = await axios.delete('/api/v1/profile');
+      await axios.delete('/api/v1/profile');
       dispatch({
         type: REMOVE_PROFILE
       });

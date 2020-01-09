@@ -1,8 +1,10 @@
 import React, { useState, Fragment } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createUserProfile } from '../../actions/profile';
 
-const CreateProfile = props => {
+const CreateProfile = ({ createUserProfile, history }) => {
   const [formData, setFormData] = useState({
     nocstatus: '',
     status: '',
@@ -35,6 +37,10 @@ const CreateProfile = props => {
       ...formData,
       [e.target.name]: e.target.value
     });
+  const onSubmit = e => {
+    e.preventDefault();
+    createUserProfile(formData, history);
+  };
   return (
     <Fragment>
       <h1 className="large text-primary">Create Your Profile</h1>
@@ -43,7 +49,7 @@ const CreateProfile = props => {
         create your profile
       </p>
       <small>* = required field</small>
-      <form className="form">
+      <form className="form" onSubmit={e => onSubmit(e)}>
         <div className="form-group">
           <select name="status" value={status} onChange={e => onChange(e)}>
             <option value="0">* Select Professional Status</option>
@@ -102,7 +108,7 @@ const CreateProfile = props => {
             type="text"
             placeholder="Location"
             name="location"
-            value={localStorage}
+            value={location}
             onChange={e => onChange(e)}
           />
           <small className="form-text">
@@ -201,6 +207,8 @@ const CreateProfile = props => {
   );
 };
 
-CreateProfile.propTypes = {};
+CreateProfile.propTypes = {
+  createUserProfile: PropTypes.func.isRequired
+};
 
-export default connect()(CreateProfile);
+export default connect(null, { createUserProfile })(withRouter(CreateProfile));

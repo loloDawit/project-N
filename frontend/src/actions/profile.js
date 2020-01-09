@@ -38,12 +38,14 @@ export const createUserProfile = (
       setAlert(
         isEdited
           ? 'Your Profile has been updated'
-          : 'Your profile has been created'
+          : 'Your profile has been created',
+        'success'
       )
     );
     if (!isEdited) {
       history.push('/dashboard');
     }
+    
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {

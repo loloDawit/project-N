@@ -11,9 +11,12 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILER = 'LOGIN_FAILER';
 
 export const USER_PROFILE = 'USER_PROFILE';
+export const USER_PROFILES = 'USER_PROFILES';
 export const PROFILE_FAILER = 'PROFILE_FAILER';
 export const REMOVE_PROFILE = 'REMOVE_PROFILE';
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
+
+export const GITHUB_REPOS = 'GITHUB_REPOS';
 
 export const DELETE_ACCOUNT = 'DELETE_ACCOUNT';
 

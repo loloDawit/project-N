@@ -1,13 +1,15 @@
 import {
   USER_PROFILE,
   PROFILE_FAILER,
+  USER_PROFILES,
+  GITHUB_REPOS,
   REMOVE_PROFILE,
   UPDATE_PROFILE
 } from '../actions/constant';
 const initialState = {
   profile: null,
   profiles: [],
-  repos: [],
+  gitrepos: [],
   loading: true,
   error: {}
 };
@@ -24,6 +26,18 @@ export default function(state = initialState, action) {
       return {
         ...state,
         profile: payload,
+        loading: false
+      };
+    case USER_PROFILES:
+      return {
+        ...state,
+        profiles: payload,
+        loading: false
+      };
+    case GITHUB_REPOS:
+      return {
+        ...state,
+        gitrepos: payload,
         loading: false
       };
     case PROFILE_FAILER:

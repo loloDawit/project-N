@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const Profile = require('../models/Profile');
 const User = require('../models/User');
+const Posts = require('../models/Posts');
 const { check, validationResult } = require('express-validator');
 const request = require('request');
 const config = require('config');
@@ -201,12 +202,14 @@ router.post(
  */
 router.delete('/', auth, async (req, res) => {
   try {
+    await Posts.deleteMany({ user: req.user.id });
     await Profile.findOneAndRemove({
       user: req.user.id
     });
     await User.findOneAndRemove({
       _id: req.user.id
     });
+
     return res.status(200).json({
       status: true,
       message: 'Profile Deleted!'
@@ -306,7 +309,8 @@ router.delete('/experience/:experienceId', auth, async (req, res) => {
 
     return res.status(200).json({
       status: true,
-      message: 'Profile Experience Deleted!'
+      message: 'Profile Experience Deleted!',
+      data: profile
     });
   } catch (error) {
     return res.status(500).json({
@@ -408,7 +412,8 @@ router.delete('/education/:educationId', auth, async (req, res) => {
 
     return res.status(200).json({
       status: true,
-      message: 'Profile education Deleted!'
+      message: 'Profile education Deleted!',
+      data: profile
     });
   } catch (error) {
     return res.status(500).json({

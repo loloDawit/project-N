@@ -1,7 +1,8 @@
 import {
   USER_PROFILE,
   PROFILE_FAILER,
-  REMOVE_PROFILE
+  REMOVE_PROFILE,
+  UPDATE_PROFILE
 } from '../actions/constant';
 const initialState = {
   profile: null,
@@ -19,6 +20,7 @@ export default function(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case USER_PROFILE:
+    case UPDATE_PROFILE:
       return {
         ...state,
         profile: payload,

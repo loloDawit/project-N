@@ -12,6 +12,7 @@ import EditProfile from './components/profiledashboard/EditProfile';
 import Experience from './components/profiledashboard/Experience';
 import Education from './components/profiledashboard/Education';
 import Profiles from './components/profiles/Profiles';
+import UserProfile from './components/profile/UserProfile';
 import './App.css';
 // Redux provider
 import { Provider } from 'react-redux';
@@ -38,6 +39,7 @@ const App = () => {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/profiles" component={Profiles} />
+              <Route exact path="/profile/:id" component={UserProfile} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute
                 exact

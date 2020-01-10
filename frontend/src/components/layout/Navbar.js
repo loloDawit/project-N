@@ -8,6 +8,7 @@ const Navbar = ({ logout, auth: { isAuthenticated, loading } }) => {
     <ul>
       <li>
         <Link to="/profiles">
+          <i className="fa fa-users" />{' '}
           <span className="hide-sm">Teams</span>
         </Link>
       </li>

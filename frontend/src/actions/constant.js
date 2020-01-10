@@ -18,6 +18,9 @@ export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 
 export const GITHUB_REPOS = 'GITHUB_REPOS';
 
+export const GET_POSTS = 'GET_POSTS';
+export const POST_ERRORS = 'POST_ERRORS';
+
 export const DELETE_ACCOUNT = 'DELETE_ACCOUNT';
 
 export const LOGOUT = 'LOGOUT';

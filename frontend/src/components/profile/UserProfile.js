@@ -114,7 +114,12 @@ const UserProfile = ({ getUserProfileById, match, profile, auth }) => {
               </div>
             </div>
             {/** -------------   Profile Github Repos Sections ---------------*/}
-            {profile.profile.data.githubusername && (<UserGitProfile username={profile.profile.data.githubusername} profile={profile} />)}
+            {profile.profile.data.githubusername && (
+              <UserGitProfile
+                username={profile.profile.data.githubusername}
+                profile={profile}
+              />
+            )}
           </div>
         </Fragment>
       )}

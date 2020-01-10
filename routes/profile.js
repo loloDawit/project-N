@@ -451,15 +451,11 @@ router.get('/github/:username', async (req, res) => {
           message: 'Username not found!'
         });
       }
-      return res.status(200).json({
-        status: true,
-        message: 'Profile found',
-        data: JSON.parse(body)
-      });
+      return res.status(200).json(JSON.parse(body));
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({
+    return res.status(500).json({
       status: false,
       message: 'Server Error!'
     });

@@ -6,11 +6,14 @@ import { connect } from 'react-redux';
 
 import {
   addLikeToUserPosts,
-  removeLikeFromUserPosts
+  removeLikeFromUserPosts,
+  deletePostFromUserPosts
 } from '../../actions/post';
 const PostItem = ({
   addLikeToUserPosts,
   removeLikeFromUserPosts,
+  deletePostFromUserPosts,
+
   auth,
   post: { _id, text, name, profilePic, user, likes, comments, createdAt }
 }) => (
@@ -54,7 +57,11 @@ const PostItem = ({
       </Link>
 
       {!auth.loading && user === auth.user.data._id && (
-        <button type="button" className="btn btn-danger">
+        <button
+          onClick={() => deletePostFromUserPosts(_id)}
+          type="button"
+          className="btn btn-danger"
+        >
           <i className="fas fa-times" />
         </button>
       )}
@@ -66,12 +73,14 @@ PostItem.propTypes = {
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   addLikeToUserPosts: PropTypes.func.isRequired,
-  removeLikeFromUserPosts: PropTypes.func.isRequired
+  removeLikeFromUserPosts: PropTypes.func.isRequired,
+  deletePostFromUserPosts: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth
 });
 export default connect(mapStateToProps, {
   addLikeToUserPosts,
-  removeLikeFromUserPosts
+  removeLikeFromUserPosts,
+  deletePostFromUserPosts
 })(PostItem);

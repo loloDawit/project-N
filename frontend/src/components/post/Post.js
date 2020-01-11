@@ -3,12 +3,22 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getUserPost } from '../../actions/post';
 import Spinner from '../layout/loading';
-
+import PostItem from '../posts/PostItem';
+import { Link } from 'react-router-dom';
 const Post = ({ getUserPost, post: { loading, post }, match }) => {
- useEffect(() => {
-      getUserPost(match.params.id);
-    }, [getUserPost]);
-  return <div>Post</div>;
+  useEffect(() => {
+    getUserPost(match.params.id);
+  }, [getUserPost]);
+  return loading || post == null ? (
+    <Spinner />
+  ) : (
+    <Fragment>
+      <Link to="/posts" className="btn">
+        Back
+      </Link>
+      <PostItem post={post} showPostActions={false} />
+    </Fragment>
+  );
 };
 
 Post.propTypes = {

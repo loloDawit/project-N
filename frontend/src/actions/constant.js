@@ -21,6 +21,7 @@ export const GITHUB_REPOS = 'GITHUB_REPOS';
 export const GET_POSTS = 'GET_POSTS';
 export const POST_FAILER = 'POST_FAILER';
 export const POST_UPDATE_LIKES = 'POST_UPDATE_LIKES';
+export const DELETE_POST = "DELETE_POST"
 
 export const DELETE_ACCOUNT = 'DELETE_ACCOUNT';
 

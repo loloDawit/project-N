@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const Item = ({
+const ProfileItem = ({
   profile: {
     user: { _id, name, profilePic },
     status,
@@ -35,8 +35,8 @@ const Item = ({
   );
 };
 
-Item.propTypes = {
+ProfileItem.propTypes = {
   profile: PropTypes.object.isRequired
 };
 
-export default Item;
+export default ProfileItem;

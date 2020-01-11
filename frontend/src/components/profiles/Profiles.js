@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/loading';
-import Item from './Item';
+import ProfileItem from './ProfileItem';
 import { getAllUserProfile } from '../../actions/profile';
 
 const Profiles = ({ getAllUserProfile, profile }) => {
@@ -23,7 +23,7 @@ const Profiles = ({ getAllUserProfile, profile }) => {
           <div className="profiles">
             {profile.profiles.status === true ? (
               profile.profiles.data.map(profile => (
-                <Item key={profile._id} profile={profile} />
+                <ProfileItem key={profile._id} profile={profile} />
               ))
             ) : (
               <h4>No profiles found...</h4>

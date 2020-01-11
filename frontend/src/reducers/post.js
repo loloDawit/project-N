@@ -8,7 +8,7 @@ import {
 } from '../actions/constant';
 
 const initialState = {
-  post: [],
+  posts: [],
   post: null,
   loading: true,
   error: {}

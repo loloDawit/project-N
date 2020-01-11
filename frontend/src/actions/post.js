@@ -80,7 +80,7 @@ export const deletePostFromUserPosts = post_id => async dispatch => {
  *
  * @param {*} post_id Id of the post object
  */
-export const addPostFromUserPosts = formData => async dispatch => {
+export const addPost = formData => async dispatch => {
   const config = {
     headers: {
       'Content-Type': 'application/json'

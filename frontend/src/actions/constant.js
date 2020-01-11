@@ -19,6 +19,7 @@ export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const GITHUB_REPOS = 'GITHUB_REPOS';
 
 export const GET_POSTS = 'GET_POSTS';
+export const GET_POST = 'GET_POST';
 export const POST_FAILER = 'POST_FAILER';
 export const POST_UPDATE_LIKES = 'POST_UPDATE_LIKES';
 export const DELETE_POST = 'DELETE_POST';

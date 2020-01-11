@@ -2,11 +2,34 @@ import axios from 'axios';
 import { setAlert } from './alert';
 import {
   GET_POSTS,
+  GET_POST,
   POST_FAILER,
   POST_UPDATE_LIKES,
-  DELETE_POST, ADD_POST
+  DELETE_POST,
+  ADD_POST
 } from './constant';
 
+/**
+ *
+ * @param {*} post_id
+ */
+export const getUserPost = post_id => async dispatch => {
+  try {
+    const res = await axios.get(`/api/v1/posts/${post_id}`);
+    dispatch({
+      type: GET_POST,
+      payload: res.data.data
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_FAILER,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+/**
+ * 
+ */
 export const getUserPosts = () => async dispatch => {
   try {
     const res = await axios.get('/api/v1/posts');
@@ -100,3 +123,4 @@ export const addPost = formData => async dispatch => {
     });
   }
 };
+

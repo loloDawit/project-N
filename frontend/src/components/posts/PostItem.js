@@ -19,14 +19,14 @@ const PostItem = ({
 }) => (
   <div className="post bg-white p-1 my-1">
     <div>
-      <a href="profile.html">
+      <Link to={`/profile/${user}`}>
         <img
           className="round-img"
           src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
           alt=""
         />
         <h4>{name}</h4>
-      </a>
+      </Link>
     </div>
     <div>
       <p className="my-1">{text}</p>

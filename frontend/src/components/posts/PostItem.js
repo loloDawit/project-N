@@ -15,7 +15,8 @@ const PostItem = ({
   deletePostFromUserPosts,
 
   auth,
-  post: { _id, text, name, profilePic, user, likes, comments, createdAt }
+  post: { _id, text, name, profilePic, user, likes, comments, createdAt },
+  showPostActions
 }) => (
   <div className="post bg-white p-1 my-1">
     <div>
@@ -33,42 +34,49 @@ const PostItem = ({
       <p className="post-date">
         Posted on <Moment format="YYYY/MM/DD">{createdAt}</Moment>
       </p>
-      <button
-        onClick={() => addLikeToUserPosts(_id)}
-        type="button"
-        className="btn btn-light"
-      >
-        <i className="fas fa-thumbs-up" />{' '}
-        {likes.length > 0 && <span>{likes.length}</span>}
-      </button>
-      <button
-        onClick={() => removeLikeFromUserPosts(_id)}
-        type="button"
-        className="btn btn-light"
-      >
-        <i className="fas fa-thumbs-down" />
-      </button>
+      {showPostActions && (
+        <Fragment>
+          <button
+            onClick={() => addLikeToUserPosts(_id)}
+            type="button"
+            className="btn btn-light"
+          >
+            <i className="fas fa-thumbs-up" />{' '}
+            {likes.length > 0 && <span>{likes.length}</span>}
+          </button>
+          <button
+            onClick={() => removeLikeFromUserPosts(_id)}
+            type="button"
+            className="btn btn-light"
+          >
+            <i className="fas fa-thumbs-down" />
+          </button>
 
-      <Link to={`/posts/${_id}`} className="btn btn-primary">
-        Discussion{' '}
-        {comments && comments.length > 0 && (
-          <span className="comment-count">{comments.length}</span>
-        )}
-      </Link>
+          <Link to={`/posts/${_id}`} className="btn btn-primary">
+            Discussion{' '}
+            {comments && comments.length > 0 && (
+              <span className="comment-count">{comments.length}</span>
+            )}
+          </Link>
 
-      {!auth.loading && user === auth.user.data._id && (
-        <button
-          onClick={() => deletePostFromUserPosts(_id)}
-          type="button"
-          className="btn btn-danger"
-        >
-          <i className="fas fa-times" />
-        </button>
+          {!auth.loading && user === auth.user.data._id && (
+            <button
+              onClick={() => deletePostFromUserPosts(_id)}
+              type="button"
+              className="btn btn-danger"
+            >
+              <i className="fas fa-times" />
+            </button>
+          )}
+        </Fragment>
       )}
     </div>
   </div>
 );
 
+PostItem.defaultProps = {
+  showPostActions: true
+};
 PostItem.propTypes = {
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,

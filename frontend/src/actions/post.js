@@ -6,7 +6,9 @@ import {
   POST_FAILER,
   POST_UPDATE_LIKES,
   DELETE_POST,
-  ADD_POST
+  ADD_POST,
+  ADD_COMMENT,
+  REMOVE_COMMENT
 } from './constant';
 
 /**
@@ -28,7 +30,7 @@ export const getUserPost = post_id => async dispatch => {
   }
 };
 /**
- * 
+ *
  */
 export const getUserPosts = () => async dispatch => {
   try {
@@ -101,7 +103,7 @@ export const deletePostFromUserPosts = post_id => async dispatch => {
 };
 /**
  *
- * @param {*} post_id Id of the post object
+ * @param {*} formData
  */
 export const addPost = formData => async dispatch => {
   const config = {
@@ -124,3 +126,59 @@ export const addPost = formData => async dispatch => {
   }
 };
 
+/**
+ *
+ * @param {*} post_id Id of the post object
+ */
+export const addCommentToPost = (post_id, formData) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  try {
+    const res = await axios.post(
+      `/api/v1/posts/comment/${post_id}`,
+      formData,
+      config
+    );
+    dispatch({
+      type: ADD_COMMENT,
+      payload: res.data.data
+    });
+    dispatch(setAlert('Post Comment Added', 'success'));
+  } catch (err) {
+    console.log(err);
+    if (err) {
+      dispatch(setAlert('Error In Frontend Logic. Fix it!!', 'danger'));
+    } else {
+      dispatch({
+        type: POST_FAILER,
+        payload: { msg: err.response.statusText, status: err.response.status }
+      });
+    }
+  }
+};
+/**
+ *
+ * @param {*} post_id
+ * @param {*} comment_id
+ */
+export const removeCommentFromPost = (
+  post_id,
+  comment_id
+) => async dispatch => {
+  try {
+    await axios.delete(`/api/v1/posts/comment/${post_id}/${comment_id}`);
+    dispatch({
+      type: REMOVE_COMMENT,
+      payload: comment_id
+    });
+    dispatch(setAlert('Post Comment Removed', 'success'));
+  } catch (err) {
+    dispatch({
+      type: POST_FAILER,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};

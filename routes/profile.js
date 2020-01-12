@@ -40,7 +40,7 @@ router.get('/self', auth, async (req, res) => {
 /**
  * @description         Get profile
  * @route               GET api/v1/profile
- * @access              Private
+ * @access              Public
  */
 router.get('/', async (req, res) => {
   try {

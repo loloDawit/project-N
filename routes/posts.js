@@ -288,7 +288,8 @@ router.post(
         data: post
       });
     } catch (error) {
-      console.error(error);
+      console.log(error.message);
+
       return res.status(500).json({
         status: false,
         message: error
@@ -331,7 +332,6 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
       data: post.comments
     });
   } catch (error) {
-    console.error(error);
     if (error.kind === 'ObjectId') {
       return res.status(404).json({
         status: false,

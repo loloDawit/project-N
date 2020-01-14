@@ -112,10 +112,10 @@ router.post(
   '/',
   auth,
   [
-    check('status', 'Status is requried')
+    check('status', 'Status is required')
       .not()
       .isEmpty(),
-    check('skills', 'Skill is required')
+    check('skills', 'Skills is required')
       .not()
       .isEmpty()
   ],
@@ -124,7 +124,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({
         status: false,
-        message: errors.array()
+        errors: errors.array()
       });
     }
     // destructure

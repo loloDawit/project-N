@@ -75,7 +75,7 @@ const CreateProfile = ({ createUserProfile, history }) => {
             onChange={e => onChange(e)}
           />
           <small className="form-text">
-            Could be your own company or one you work for
+           Company, one you work for
           </small>
         </div>
         <div className="form-group">
@@ -85,7 +85,7 @@ const CreateProfile = ({ createUserProfile, history }) => {
             onChange={e => onChange(e)}
           >
             <option value="0"> Select NOC Status</option>
-            <option value="E1">Enginner 1</option>
+            <option value="E1">Engineer1</option>
             <option value="Ninja">Ninja</option>
             <option value="PM">PM</option>
           </select>

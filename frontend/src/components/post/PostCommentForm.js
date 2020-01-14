@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addCommentToPost } from '../../actions/post';
+/**
+ * 
+ * @param {*} param0 The post id, and function addCommmentToPost
+ * 
+ */
 const PostCommentForm = ({ postId, addCommentToPost }) => {
   const [text, setText] = useState('');
   return (

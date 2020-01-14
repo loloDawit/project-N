@@ -34,8 +34,8 @@ const UserProfileSchema = mongoose.Schema({
   },
   nocstatus: {
     type: String,
-    enum: ['E1', 'Ninja', 'PM'],
-    default: 'E1'
+    enum: ['Engineer1', 'Ninja', 'PM'],
+    default: 'Engineer1'
   },
   experience: [
     {

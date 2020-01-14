@@ -124,7 +124,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({
         status: false,
-        message: errors.array()
+        errors: errors.array()
       });
     }
     // destructure

@@ -65,10 +65,11 @@ export const addLikeToUserPosts = post_id => async dispatch => {
       type: POST_UPDATE_LIKES,
       payload: { post_id, likes: res.data.data }
     });
+    dispatch(setAlert('Post liked.', 'success'));
   } catch (err) {
-    const errors = err.response.data.errors;
+    const errors = err.response.data.message;
     if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+      dispatch(setAlert(err.response.data.message, 'danger'));
     }
     dispatch({
       type: POST_FAILER,
@@ -87,10 +88,11 @@ export const removeLikeFromUserPosts = post_id => async dispatch => {
       type: POST_UPDATE_LIKES,
       payload: { post_id, likes: res.data.data }
     });
+    dispatch(setAlert('Post like removed.', 'success'));
   } catch (err) {
-    const errors = err.response.data.errors;
+    const errors = err.response.data.message;
     if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+      dispatch(setAlert(err.response.data.message, 'danger'));
     }
     dispatch({
       type: POST_FAILER,
@@ -172,8 +174,6 @@ export const addCommentToPost = (post_id, formData) => async dispatch => {
     });
     dispatch(setAlert('Post Comment Added', 'success'));
   } catch (err) {
-    console.log(err);
-
     const errors = err.response.data.errors;
     if (errors) {
       errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));

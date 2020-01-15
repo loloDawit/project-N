@@ -9,6 +9,8 @@ default.json
 
 # testing
 /coverage
+/cypress
+
 
 # production
 /build

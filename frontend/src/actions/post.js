@@ -23,6 +23,10 @@ export const getUserPost = post_id => async dispatch => {
       payload: res.data.data
     });
   } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
     dispatch({
       type: POST_FAILER,
       payload: { msg: err.response.statusText, status: err.response.status }
@@ -40,6 +44,10 @@ export const getUserPosts = () => async dispatch => {
       payload: res.data.data
     });
   } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
     dispatch({
       type: POST_FAILER,
       payload: { msg: err.response.statusText, status: err.response.status }
@@ -58,6 +66,10 @@ export const addLikeToUserPosts = post_id => async dispatch => {
       payload: { post_id, likes: res.data.data }
     });
   } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
     dispatch({
       type: POST_FAILER,
       payload: { msg: err.response.statusText, status: err.response.status }
@@ -76,6 +88,10 @@ export const removeLikeFromUserPosts = post_id => async dispatch => {
       payload: { post_id, likes: res.data.data }
     });
   } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
     dispatch({
       type: POST_FAILER,
       payload: { msg: err.response.statusText, status: err.response.status }
@@ -157,14 +173,15 @@ export const addCommentToPost = (post_id, formData) => async dispatch => {
     dispatch(setAlert('Post Comment Added', 'success'));
   } catch (err) {
     console.log(err);
-    if (err) {
-      dispatch(setAlert('Error In Frontend Logic. Fix it!!', 'danger'));
-    } else {
-      dispatch({
-        type: POST_FAILER,
-        payload: { msg: err.response.statusText, status: err.response.status }
-      });
+
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
+    dispatch({
+      type: POST_FAILER,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
   }
 };
 /**
@@ -184,6 +201,10 @@ export const removeCommentFromPost = (
     });
     dispatch(setAlert('Post Comment Removed', 'success'));
   } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
     dispatch({
       type: POST_FAILER,
       payload: { msg: err.response.statusText, status: err.response.status }

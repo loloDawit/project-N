@@ -182,7 +182,6 @@ router.put('/like/:id', auth, async (req, res) => {
       data: post.likes
     });
   } catch (error) {
-    console.error(error);
     if (error.kind === 'ObjectId') {
       return res.status(404).json({
         status: false,

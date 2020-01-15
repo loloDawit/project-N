@@ -24,7 +24,6 @@ const PostForm = ({ addPost }) => {
           value={text}
           placeholder="Create a post"
           onChange={e => setText(e.target.value)}
-          required
         ></textarea>
         <input type="submit" className="btn btn-dark my-1" value="Submit" />
       </form>

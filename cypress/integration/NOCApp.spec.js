@@ -178,3 +178,22 @@ context('Test successful profile creation', () => {
     cy.url().should('include', '/dashboard');
   });
 });
+
+context ('Test Annoucements route', ()=>{
+  beforeEach(() => {
+    cy.visit(`${baseURL}/login`);
+    cy.get("input[name='email']").type('Dawit@noc.com');
+    cy.get("input[name='password']").type('password$1');
+    cy.get("input[type='submit']").click();
+    cy.url().should('include', '/dashboard');
+    cy.contains('Dashboard');
+  });
+  it('Test empty post discussion', () => {
+    cy.contains('Annoucements').click();
+    cy.url().should('include', '/posts');
+    cy.get("input[text=''").type('Guys,i will be working from home');
+    cy.get("input[type='submit']").click();
+    cy.contains(`Status is required`);
+    cy.contains(`Skills is required`);
+  });
+})
